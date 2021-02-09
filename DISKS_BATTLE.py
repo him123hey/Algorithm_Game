@@ -1,10 +1,10 @@
 board = [
-    ['y','y','r','y','y','r','y'],
-    ['y','y','y','r','y','r','r'],
-    ['r','r','y','y','r','y','r'],
-    ['y','y','r','r','r','r','y'],
-    ['r','y','y','y','r','r','r'],
-    ['r','y','y','y','r','r','r']
+    [0,'y','r','y','y','r','y'],
+    [0,'y','y','r','y','r','r'],
+    [0,'r','y','y','r','y','r'],
+    [0,'y','r','r','r','r','y'],
+    [0,'y','y','y','r','r','r'],
+    ['y','y','y','y','r','r','r']
 ]
 BOARD_ROWS = 6
 BOARD_COLUMNS = 7
@@ -15,9 +15,6 @@ def isInBoard(comb):
         if (n[0] < 0 or n[1] < 0) or (n[0] >= BOARD_ROWS or n[1] >= BOARD_COLUMNS):
             return False
     return True
-
-test = isInBoard([[0, 1], [0, 2], [0, 6], [0, 7]])
-print(test)
 # array is a combination of 4 cells ([[r,c],[r+1,c],[r+2,c],[r+3,c]]) for example
 # returns True if all the cells of the combination are in the board
 # returns False if not
@@ -62,3 +59,11 @@ def hasSameSign(sign, comb):
         isSameSign = True
     return isSameSign
 #returns wether or not a combination of 4 cells has the same sign or not
+
+#check column can play
+def canPlay(colIndex):
+    global BOARD_COLUMNS, board
+    if colIndex >= BOARD_COLUMNS or board[0][colIndex]== 0:
+        return False
+    else:
+        return True
