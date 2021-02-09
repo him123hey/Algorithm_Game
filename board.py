@@ -8,6 +8,7 @@ board = [
 ]
 BOARD_ROWS = 6
 BOARD_COLUMNS = 7
+currentPlayer = "RED"
 def isInBoard(comb):
     global BOARD_ROWS, BOARD_COLUMNS
     for n in comb:
@@ -46,6 +47,13 @@ def getCombinationsFrom(row, col):
     return combinations
 
 
+def isConbination(sign, row, col):
+    conbinations = getCombinationsFrom(row, col)
+    for conb in conbinations:
+        if isInBoard(conb):
+            hasSameSign(sign, conb)
+            
+
 def hasSameSign(sign, comb):
     global board
     counter = 0
@@ -53,17 +61,45 @@ def hasSameSign(sign, comb):
     for n in comb:
         row = n[0]
         col = n[1]
-        if sign == board[row][col]:
+        if str(sign) == board[row][col]:
             counter += 1
     if counter == 4:
         isSameSign = True
     return isSameSign
+
+print(isConbination("Y", 3,2))
 #returns wether or not a combination of 4 cells has the same sign or not
 
 #check column can play
 def canPlay(colIndex):
     global BOARD_COLUMNS, board
-    if colIndex >= BOARD_COLUMNS or board[0][colIndex]== 0:
+    if colIndex >= BOARD_COLUMNS or board[0][colIndex] != 0:
         return False
     else:
         return True
+
+# check if can sign
+def canSignIndex(colIndex):
+    global board
+    if canPlay(colIndex):
+        for i in range(len(board[colIndex])):
+            if board[i][colIndex] != 0:
+                return i -1
+# switch user 
+def switchUser():
+    global currentPlayer
+    if currentPlayer == "RED":
+        currentPlayer = "YELLOW"
+    else:
+        currentPlayer = "RED"
+    return currentPlayer
+
+def signOnBoard(col):
+    global board
+    global currentPlayer
+    if canPlay(col):
+        row = canSignIndex(col)
+        board[row][col] = currentPlayer
+    return board
+
+print(signOnBoard(0))
